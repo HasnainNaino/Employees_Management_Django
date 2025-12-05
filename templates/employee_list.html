@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{%block title%} Employees_list {%endblock%}
+
+{% block content %}
+<h2>Employees List</h2>
+<button class="btn btn-primary mb-3 float-end" onclick="location.href='{% url 'create_employee' %}'">Add New Employee</button>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Position</th>
+            <th>email</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for employee in employees %}
+        <tr>
+            <td>{{ employee.id }}</td>
+            <td>{{ employee.name }}</td>
+            <td>{{ employee.position }}</td>
+            <td>{{ employee.email }}</td>
+            <td>
+                <a href="{% url 'update_employee' employee.id %}" class="btn btn-sm btn-primary">Edit</a>
+                <form method="post" action="{% url 'delete_employee' employee.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+
+                
+            </td>
+        </tr>
+        {% endfor %}    
+
+    </tbody>
+</table>
+{% endblock content %}
